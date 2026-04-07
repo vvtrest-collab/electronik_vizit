@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Зубной Техник — Надежда Кузьмина</title>
+    <link rel="icon" href="i.webp" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg:        rgb(201,206,205);
+            --color-surface:   rgb(245,242,242);
+            --color-card:      rgb(212,204,204);
+            --color-plum:      rgb(89,15,107);
+            --color-plum-lt:   rgba(89,15,107,0.85);
+            --color-plum-soft: rgba(89,15,107,0.15);
+            --color-accent:    rgb(139,77,87);
+            --color-text:      #333;
+            --color-muted:     #555;
+            --radius:          15px;
+            --shadow:          0 10px 20px var(--color-plum-lt);
+            --shadow-hover:    0 15px 30px var(--color-plum-lt);
+            --font-display:    'Cormorant Garamond', Georgia, serif;
+            --font-body:       'Nunito','Segoe UI',Tahoma,sans-serif;
+            --transition:      0.3s ease;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        body { background: var(--color-bg); font-family: var(--font-body); text-align: center; margin: 0; padding: 0; }
+
+        /* HEADER */
+        .header { padding: 30px 20px; margin: 16px; background: var(--color-surface); border-radius: var(--radius); box-shadow: var(--shadow); }
+        .header__title { font-family: var(--font-display); font-size: clamp(1.3rem,4vw,2rem); font-weight: 700; margin: 10px 0 5px; color: var(--color-text); letter-spacing: 1px; }
+        .header__subtitle { display: inline-block; font-size: clamp(14px,3vw,18px); font-weight: 600; color: rgba(129,12,114,0.85); background: var(--color-card); border-radius: var(--radius); padding: 4px 14px; margin: 0; }
+        .nadysik { width: min(280px,70vw); height: min(280px,70vw); border-radius: 50%; object-fit: cover; border: 3px solid #beb6b6; box-shadow: 0 10px 20px rgb(31,30,30); transition: transform var(--transition),box-shadow var(--transition),border-color var(--transition); }
+        .nadysik:hover { transform: scale(1.07); box-shadow: var(--shadow-hover); border-color: #ad06a5; }
+
+        /* MAIN */
+        .main { padding: 20px; background: var(--color-surface); border-radius: var(--radius); box-shadow: var(--shadow); margin: 0 16px 16px; text-align: center; }
+        .section { margin-bottom: 16px; }
+        .section__title { font-family: var(--font-display); font-size: clamp(1.1rem,3.5vw,1.5rem); font-weight: 600; color: var(--color-text); margin-bottom: 12px; }
+
+        /* ACCORDION */
+        .modern-details { background: var(--color-card); border: none; border-radius: 8px; margin-bottom: 10px; overflow: hidden; transition: box-shadow .5s; }
+        .modern-details:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+        .modern-details summary { padding: 14px 20px; cursor: pointer; font-weight: 600; color: var(--color-text); list-style: none; display: flex; justify-content: space-between; align-items: center; transition: background .2s; box-shadow: 0 4px 10px var(--color-plum-lt); font-size: clamp(13px,2.5vw,15px); }
+        .modern-details summary::-webkit-details-marker { display: none; }
+        .modern-details summary:hover, .modern-details[open] summary { background: #f9f9f9; color: #0056b3; }
+        .modern-details summary::after { content:''; width:10px; height:10px; border-right:2px solid #777; border-bottom:2px solid #777; transform:rotate(45deg); transition:transform .4s; flex-shrink:0; margin-left:10px; }
+        .modern-details[open] summary::after { transform:rotate(225deg); border-color:#0056b3; }
+        .details-content { padding:16px 20px; line-height:1.4; color:var(--color-muted); animation:fadeIn .4s ease-out; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:none} }
+
+        /* SERVICES */
+        .skills-list { padding:10px 20px; margin:0; display:inline-block; text-align:left; list-style:none; }
+        .skills-list li { background:var(--color-surface); margin:8px 0; padding:10px 16px; border-radius:10px; box-shadow:0 4px 8px var(--color-plum-soft); font-size:clamp(13px,2.5vw,15px); transition:transform var(--transition),box-shadow var(--transition); }
+        .skills-list li:hover { transform:translateX(4px); box-shadow:0 6px 14px var(--color-plum-soft); }
+
+        /* GALLERY */
+        .gallery { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:8px; padding:12px; }
+        .gallery__item { width:100%; aspect-ratio:1; object-fit:cover; border-radius:10px; cursor:pointer; transition:transform var(--transition),box-shadow var(--transition); box-shadow:0 3px 8px rgba(0,0,0,.15); }
+        .gallery__item:hover { transform:scale(1.04); box-shadow:0 8px 20px var(--color-plum-lt); }
+
+        /* DIVIDER */
+        .hr { border:none; height:2px; background:linear-gradient(90deg,transparent,var(--color-plum),transparent); margin:30px auto; width:90%; }
+
+        /* CONTACTS */
+        .article { padding:24px 16px; background:rgba(255,255,255,.27); border-radius:var(--radius); border:1px solid #b4b2b48e; box-shadow:0 20px 30px rgba(124,124,124,.2); margin:20px 0 0; }
+        .article h2 { font-family:var(--font-display); font-size:clamp(1.1rem,3vw,1.5rem); margin-bottom:20px; }
+        .contacts { display:flex; flex-direction:column; align-items:center; gap:12px; font-style:normal; }
+        .contact-btn { display:inline-flex; align-items:center; gap:8px; text-decoration:none; font-family:var(--font-body); font-weight:700; font-size:clamp(14px,3vw,17px); padding:9px 28px; border-radius:30px; border:none; cursor:pointer; color:#0a0101; transition:transform var(--transition),box-shadow var(--transition),color var(--transition); width:min(240px,80vw); justify-content:center; }
+        .contact-btn:hover { transform:translateY(-3px); box-shadow:0 6px 20px rgba(0,0,0,.3); color:white; }
+        .contact-btn--instagram { background:linear-gradient(45deg,#f09433,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888); }
+        .contact-btn--telegram { background:linear-gradient(45deg,#0088CC,#006699); }
+        .contact-btn--phone { background:rgb(68,223,30); }
+        .contact-btn--phone:hover { background:#0bfa03; }
+
+        /* FOOTER */
+        .footer-text { font-size:13px; color:rgb(94,90,90); text-align:center; padding:16px 0 10px; margin:0; }
+
+        /* MODAL */
+        .modal { display:none; position:fixed; inset:0; z-index:2000; background:rgba(0,0,0,.95); justify-content:center; align-items:center; touch-action:none; }
+        .modal.show { display:flex; }
+        .modal-content { max-width:90vw; max-height:82vh; width:auto; height:auto; object-fit:contain; border-radius:8px; box-shadow:0 0 30px rgba(0,0,0,.6); }
+        .modal-btn { position:fixed; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); color:#fff; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background var(--transition),transform var(--transition); z-index:2100; }
+        .modal-btn:hover { background:rgba(255,255,255,.25); transform:scale(1.1); }
+        .modal-btn--close { top:16px; right:16px; width:44px; height:44px; font-size:20px; }
+        .modal-nav { top:50%; transform:translateY(-50%); width:48px; height:48px; font-size:20px; }
+        .modal-nav:hover { transform:translateY(-50%) scale(1.1); }
+        .prev { left:10px; } .next { right:10px; }
+        .modal-counter { position:fixed; bottom:16px; color:white; background:rgba(0,0,0,.5); padding:5px 15px; border-radius:20px; font-size:13px; pointer-events:none; }
+
+        /* RESPONSIVE */
+        @media(max-width:480px) {
+            .header, .main { margin:10px; padding:16px; }
+            .gallery { grid-template-columns:repeat(2,1fr); gap:6px; }
+            .modal-content { width:96%; max-height:60vh; }
+            .modal-nav { width:38px; height:48px; font-size:16px; }
+        }
+        @media(min-width:768px) {
+            .contacts { flex-direction:row; justify-content:center; flex-wrap:wrap; }
+            .contact-btn { width:auto; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <img src="avatar/nadysik.png" alt="Надежда Кузьмина" class="nadysik" loading="lazy">
+        <h1 class="header__title">Зубной Техник</h1>
+        <h2 class="header__subtitle">Надежда Кузьмина</h2>
+    </header>
+    <main class="main">
+        <section class="section">
+            <h2 class="section__title">Все виды съёмного протезирования</h2>
+            <details class="modern-details">
+                <summary>📋 Открыть Список</summary>
+                <div class="details-content">
+                    <ol class="skills-list">
+                        <li>🦷 Германия</li><li>🦷 Нейлон</li><li>🦷 Акрил</li>
+                        <li>🦷 Кондулор (Швейцария)</li><li>🦷 Бюгельный (Кобальт-Хром)</li>
+                        <li>🦷 Бюгельный белый (Acetal)</li><li>🦷 На имплантах (Ball Attachment)</li>
+                        <li>🦷 Микропротез до 3-х единиц</li>
+                    </ol>
+                </div>
+            </details>
+        </section>
+        <section class="section">
+            <h2 class="section__title">Мои работы</h2>
+            <details class="modern-details">
+                <summary>🖼️ Открыть Галерею</summary>
+                <div class="gallery" id="gallery"></div>
+            </details>
+        </section>
+        <hr class="hr">
+        <article class="article">
+            <h2>Связаться со мной</h2>
+            <address class="contacts">
+                <a href="https://www.instagram.com/naide.kuz/" target="_blank" rel="noopener noreferrer" class="contact-btn contact-btn--instagram"><i class="bi bi-instagram"></i> Instagram</a>
+                <a href="https://t.me/+FgswcdiI5O81OGUy" target="_blank" rel="noopener noreferrer" class="contact-btn contact-btn--telegram"><i class="bi bi-telegram"></i> Telegram</a>
+                <a href="tel:+77072533555" class="contact-btn contact-btn--phone"><i class="bi bi-telephone"></i> Позвонить</a>
+            </address>
+        </article>
+    </main>
+    <footer><p class="footer-text">&copy; 2026 Надежда Кузьмина — Зубной Техник</p></footer>
+
+    <div class="modal" id="modal">
+        <button class="modal-btn modal-btn--close" onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
+        <button class="modal-btn modal-nav prev" onclick="changeImage(-1)"><i class="bi bi-chevron-left"></i></button>
+        <img class="modal-content" id="modalImg" src="" alt="Фото работы">
+        <button class="modal-btn modal-nav next" onclick="changeImage(1)"><i class="bi bi-chevron-right"></i></button>
+        <div class="modal-counter" id="modalCounter"></div>
+    </div>
+
+    <script>
+        const IMAGES = Array.from({length:8},(_,i)=>`products/${i+1}.jpg`);
+        let idx = 0;
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modalImg');
+        const counter = document.getElementById('modalCounter');
+        const gallery = document.getElementById('gallery');
+
+        IMAGES.forEach((src,i)=>{
+            const img = document.createElement('img');
+            img.className='gallery__item'; img.src=src; img.alt=`Работа ${i+1}`; img.loading='lazy';
+            img.onerror=()=>img.src=`https://via.placeholder.com/400x400?text=${i+1}`;
+            img.addEventListener('click',()=>openModal(i));
+            gallery.appendChild(img);
+        });
+
+        function openModal(i){ idx=i; updateModal(); modal.classList.add('show'); document.body.style.overflow='hidden'; }
+        function closeModal(){ modal.classList.remove('show'); document.body.style.overflow=''; }
+        function changeImage(d){ idx=(idx+d+IMAGES.length)%IMAGES.length; updateModal(); }
+        function updateModal(){ modalImg.src=IMAGES[idx]; modalImg.onerror=()=>{ modalImg.src=`https://via.placeholder.com/800x800?text=Работа+${idx+1}`; }; counter.textContent=`${idx+1} / ${IMAGES.length}`; }
+
+        modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
+        document.addEventListener('keydown',e=>{ if(!modal.classList.contains('show')) return; if(e.key==='Escape') closeModal(); if(e.key==='ArrowLeft') changeImage(-1); if(e.key==='ArrowRight') changeImage(1); });
+        let tx=0;
+        modal.addEventListener('touchstart',e=>{tx=e.changedTouches[0].screenX},{passive:true});
+        modal.addEventListener('touchend',e=>{ const d=tx-e.changedTouches[0].screenX; if(Math.abs(d)>50) changeImage(d>0?1:-1); },{passive:true});
+    </script>
+</body>
+</html>
