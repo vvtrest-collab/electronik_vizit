@@ -1,889 +1,267 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="myfoto.png" type="image/x-icon">
-    <title>VirusV Profile</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <title>Зубной Техник — Надежда Кузьмина</title>
+    <link rel="icon" href="i.webp" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box
+        :root {
+            --color-bg:         rgb(201,206,205);
+            --color-surface:    rgb(245,242,242);
+            --color-card:       rgb(212,204,204);
+            --color-plum:       rgb(89,15,107);
+            --color-plum-lt:    rgba(89,15,107,0.85);
+            --color-plum-soft:  rgba(89,15,107,0.15);
+            --color-accent:     rgb(139,77,87);
+            --color-text:       #333;
+            --color-muted:      #555;
+            --radius:           15px;
+            --shadow:           0 10px 20px var(--color-plum-lt);
+            --shadow-hover:     0 15px 30px var(--color-plum-lt);
+            --font-display:     'Cormorant Garamond', Georgia, serif;
+            --font-body:        'Nunito','Segoe UI',Tahoma,sans-serif;
+            --transition:       0.3s ease;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        body { background: var(--color-bg); font-family: var(--font-body); text-align: center; margin: 0; padding: 0; }
+
+        /* LANG SWITCHER */
+        .lang-panel { padding: 10px; display: flex; justify-content: center; gap: 15px; }
+        .lang-link { cursor: pointer; font-size: 12px; font-weight: 700; color: var(--color-muted); text-transform: uppercase; letter-spacing: 1px; transition: color var(--transition); border-bottom: 2px solid transparent; }
+        .lang-link.active { color: var(--color-plum); border-bottom-color: var(--color-plum); }
+
+        /* HEADER */
+        .header { padding: 30px 20px; margin: 0 16px 16px; background: var(--color-surface); border-radius: var(--radius); box-shadow: var(--shadow); }
+        .header__title { font-family: var(--font-display); font-size: clamp(1.3rem,4vw,2rem); font-weight: 700; margin: 10px 0 5px; color: var(--color-text); letter-spacing: 1px; }
+        .header__subtitle { display: inline-block; font-size: clamp(14px,3vw,18px); font-weight: 600; color: rgba(129,12,114,0.85); background: var(--color-card); border-radius: var(--radius); padding: 4px 14px; margin: 0; }
+        .nadysik { width: min(280px,70vw); height: min(280px,70vw); border-radius: 50%; object-fit: cover; border: 3px solid #beb6b6; box-shadow: 0 10px 20px rgb(31,30,30); transition: transform var(--transition),box-shadow var(--transition),border-color var(--transition); }
+        .nadysik:hover { transform: scale(1.07); box-shadow: var(--shadow-hover); border-color: #ad06a5; }
+
+        /* MAIN */
+        .main { padding: 20px; background: var(--color-surface); border-radius: var(--radius); box-shadow: var(--shadow); margin: 0 16px 16px; text-align: center; }
+        .section { margin-bottom: 16px; }
+        .section__title { font-family: var(--font-display); font-size: clamp(1.1rem,3.5vw,1.5rem); font-weight: 600; color: var(--color-text); margin-bottom: 12px; }
+
+        /* ACCORDION */
+        .modern-details { background: var(--color-card); border: none; border-radius: 8px; margin-bottom: 10px; overflow: hidden; transition: box-shadow .5s; }
+        .modern-details:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+        .modern-details summary { padding: 14px 20px; cursor: pointer; font-weight: 600; color: var(--color-text); list-style: none; display: flex; justify-content: space-between; align-items: center; transition: background .2s; box-shadow: 0 4px 10px var(--color-plum-lt); font-size: clamp(13px,2.5vw,15px); }
+        .modern-details summary::-webkit-details-marker { display: none; }
+        .modern-details summary:hover, .modern-details[open] summary { background: #f9f9f9; color: #0056b3; }
+        .modern-details summary::after { content:''; width:10px; height:10px; border-right:2px solid #777; border-bottom:2px solid #777; transform:rotate(45deg); transition:transform .4s; flex-shrink:0; margin-left:10px; }
+        .modern-details[open] summary::after { transform:rotate(225deg); border-color:#0056b3; }
+        .details-content { padding:16px 20px; line-height:1.4; color:var(--color-muted); animation:fadeIn .4s ease-out; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:none} }
+
+        /* SERVICES */
+        .skills-list { padding:10px 20px; margin:0; display:inline-block; text-align:left; list-style:none; }
+        .skills-list li { background:var(--color-surface); margin:8px 0; padding:10px 16px; border-radius:10px; box-shadow:0 4px 8px var(--color-plum-soft); font-size:clamp(13px,2.5vw,15px); transition:transform var(--transition),box-shadow var(--transition); }
+        .skills-list li:hover { transform:translateX(4px); box-shadow:0 6px 14px var(--color-plum-soft); }
+
+        /* GALLERY */
+        .gallery { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:8px; padding:12px; }
+        .gallery__item { width:100%; aspect-ratio:1; object-fit:cover; border-radius:10px; cursor:pointer; transition:transform var(--transition),box-shadow var(--transition); box-shadow:0 3px 8px rgba(0,0,0,.15); }
+        .gallery__item:hover { transform:scale(1.04); box-shadow:0 8px 20px var(--color-plum-lt); }
+
+        /* DIVIDER */
+        .hr { border:none; height:2px; background:linear-gradient(90deg,transparent,var(--color-plum),transparent); margin:30px auto; width:90%; }
+
+        /* CONTACTS */
+        .article { padding:24px 16px; background:rgba(255,255,255,.27); border-radius:var(--radius); border:1px solid #b4b2b48e; box-shadow:0 20px 30px rgba(124,124,124,.2); margin:20px 0 0; }
+        .article h2 { font-family:var(--font-display); font-size:clamp(1.1rem,3vw,1.5rem); margin-bottom:20px; }
+        .contacts { display:flex; flex-direction:column; align-items:center; gap:12px; font-style:normal; }
+        .contact-btn { display:inline-flex; align-items:center; gap:8px; text-decoration:none; font-family:var(--font-body); font-weight:700; font-size:clamp(14px,3vw,17px); padding:9px 28px; border-radius:30px; border:none; cursor:pointer; color:#0a0101; transition:transform var(--transition),box-shadow var(--transition),color var(--transition); width:min(240px,80vw); justify-content:center; }
+        .contact-btn:hover { transform:translateY(-3px); box-shadow:0 6px 20px rgba(0,0,0,.3); color:white; }
+        .contact-btn--instagram { background:linear-gradient(45deg,#f09433,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888); }
+        .contact-btn--telegram { background:linear-gradient(45deg,#0088CC,#006699); }
+        .contact-btn--phone { background:rgb(68,223,30); }
+        .contact-btn--phone:hover { background:#0bfa03; }
+
+        /* FOOTER */
+        .footer-text { font-size:13px; color:rgb(94,90,90); text-align:center; padding:16px 0 10px; margin:0; }
+
+        /* MODAL */
+        .modal { display:none; position:fixed; inset:0; z-index:2000; background:rgba(0,0,0,.95); justify-content:center; align-items:center; touch-action:none; }
+        .modal.show { display:flex; }
+        .modal-content { max-width:90vw; max-height:82vh; width:auto; height:auto; object-fit:contain; border-radius:8px; box-shadow:0 0 30px rgba(0,0,0,.6); }
+        .modal-btn { position:fixed; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); color:#fff; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background var(--transition),transform var(--transition); z-index:2100; }
+        .modal-btn:hover { background:rgba(255,255,255,.25); transform:scale(1.1); }
+        .modal-btn--close { top:16px; right:16px; width:44px; height:44px; font-size:20px; }
+        .modal-nav { top:50%; transform:translateY(-50%); width:48px; height:48px; font-size:20px; }
+        .modal-nav:hover { transform:translateY(-50%) scale(1.1); }
+        .prev { left:10px; } .next { right:10px; }
+        .modal-counter { position:fixed; bottom:16px; color:white; background:rgba(0,0,0,.5); padding:5px 15px; border-radius:20px; font-size:13px; pointer-events:none; }
+
+        /* RESPONSIVE */
+        @media(max-width:480px) {
+            .header, .main { margin:10px; padding:16px; }
+            .gallery { grid-template-columns:repeat(2,1fr); gap:6px; }
+            .modal-content { width:96%; max-height:60vh; }
+            .modal-nav { width:38px; height:48px; font-size:16px; }
+        }
+        @media(min-width:768px) {
+            .contacts { flex-direction:row; justify-content:center; flex-wrap:wrap; }
+            .contact-btn { width:auto; }
         }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0f172a;
-            color: #f1f5f9;
-            overflow-x: hidden
-        }
-
-        .wrapper {
-            display: flex;
-            min-height: 100vh
-        }
-
-        /* ---- САЙДБАР ---- */
-        .sidebar {
-            width: 160px;
-            background: rgba(30, 41, 59, .7);
-            backdrop-filter: blur(12px);
-            border-right: 1px solid rgba(255, 255, 255, .1);
-            display: flex;
-            flex-direction: column;
-            padding: 18px 10px;
-            transition: width .4s cubic-bezier(.175, .885, .32, 1.275);
-            position: relative;
-            z-index: 100;
-            overflow: hidden;
-            flex-shrink: 0
-        }
-
-        .sidebar.collapsed {
-            width: 58px
-        }
-
-        /* Мобильный оверлей */
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, .5);
-            z-index: 99
-        }
-
-        .sidebar-overlay.show {
-            display: block
-        }
-
-        /* На мобиле сайдбар выезжает поверх */
-        @media(max-width:640px) {
-
-            .sidebar.mobile-open ~ .mobile-menu-btn {
-                display: none;
-            }
-
-            .sidebar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                height: 100%;
-                width: 220px;
-                transform: translateX(-100%);
-                transition: transform .35s ease;
-                z-index: 100;
-                padding: 20px 14px
-            }
-
-            .sidebar.mobile-open {
-                transform: translateX(0)
-            }
-
-            .sidebar.collapsed {
-                width: 220px;
-                transform: translateX(-100%)
-            }
-
-            .sidebar.mobile-open.collapsed {
-                transform: translateX(0)
-            }
-
-            .sidebar .nav-text,
-            .sidebar .logo-text,
-            .sidebar .sidebar-footer span {
-                display: block !important
-            }
-
-            .sidebar .sidebar-nav a {
-                justify-content: flex-start !important;
-                padding: 12px 14px !important
-            }
-
-            .mobile-menu-btn {
-                display: flex;
-                position: fixed;
-                top: 14px;
-                left: 14px;
-                z-index: 200;
-                background: rgba(30, 41, 59, .9);
-                border: 1px solid rgba(255, 255, 255, .1);
-                color: white;
-                width: 38px;
-                height: 38px;
-                border-radius: 8px;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                font-size: 18px
-            }
-
-            .main-content {
-                padding-top: 64px
-            }
-
-
-
-            /* Адаптация селектора языка для мобилок */
-            #lang-switch {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-
-            .sidebar-footer {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
-        @media(min-width:641px) {
-            .mobile-menu-btn {
-                display: none
-            }
-
-            .sidebar-overlay {
-                display: none !important
-            }
-        }
-
-        .sidebar-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding: 0 8px;
-            height: 35px
-        }
-
-        .sidebar.collapsed .sidebar-header {
-            justify-content: center
-        }
-
-        .logo-text {
-            font-weight: 800;
-            font-size: 1.4rem;
-            letter-spacing: -1px;
-            white-space: nowrap
-        }
-
-        .logo-text .dot {
-            color: #38bdf8
-        }
-
-        .sidebar.collapsed .logo-text {
-            display: none
-        }
-
-        .sidebar.mobile-open #toggle-btn {
-    display: flex !important;
-}
-
-        #toggle-btn {
-            background: rgba(56, 189, 248, .3);
-            border: none;
-            color: white;
-            width: 35px;
-            height: 35px;
-            min-width: 35px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: .3s;
-            flex-shrink: 0
-        }
-
-        #toggle-btn:hover {
-            background: #38bdf8
-        }
-
-        .sidebar-nav ul {
-            list-style: none
-        }
-
-        .sidebar-nav li {
-            margin-bottom: 4px
-        }
-
-        .sidebar-nav a {
-            text-decoration: none;
-            color: #94a3b8;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 8px;
-            border-radius: 12px;
-            transition: .3s;
-            white-space: nowrap;
-            height: 40px
-        }
-
-        .sidebar.collapsed .sidebar-nav a {
-            justify-content: center;
-            padding: 10px 0
-        }
-
-        .sidebar-nav li.active a,
-        .sidebar-nav a:hover {
-            background: rgba(56, 189, 248, .15);
-            color: #38bdf8
-        }
-
-        .sidebar-nav i {
-            font-size: 1.3em;
-            min-width: 20px;
-            text-align: center
-        }
-
-        .sidebar.collapsed .nav-text,
-        .sidebar.collapsed .logo-text,
-        .sidebar.collapsed .sidebar-footer span {
-            display: none
-        }
-
-        .sidebar.collapsed .sidebar-footer {
-            justify-content: center
-        }
-
-        .sidebar-footer {
-            margin-top: auto;
-            padding: 10px 8px;
-            color: #475569;
-            font-size: .8rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center !important;
-            justify-content: flex-start;
-            gap: 10px;
-            white-space: nowrap;
-            flex-wrap: wrap;
-            overflow: hidden;
-        }
-
-        .footer-copy {
-            display: flex;
-            align-items: center;    /* Центрируем иконку и текст по вертикали */
-            gap: 8px;               /* Расстояние от иконки до букв */
-            white-space: nowrap;    /* Запрещаем перенос текста на новую строку */
-            color: #475569;
-            font-size: 0.8rem;
-        }
-
-        .footer-copy i {
-            line-height: 0;         /* Убираем лишнюю высоту иконки, которая толкает текст */
-            display: flex;
-            align-items: center;
-}
-
-        .lang-select {
-            background: rgba(255, 255, 255, .05);
-            color: #f1f5f9;
-            border: 1px solid rgba(56, 189, 248, .3);
-            border-radius: 6px;
-            padding: 4px;
-            cursor: pointer;
-            outline: none;
-            font-size: 0.8rem;
-        }
-
-        .lang-select:hover {
-            border-color: #38bdf8
-        }
-
-        .lang-select option {
-            background: #1e293b;
-            color: #fff;
-        }
-
-        .sidebar.collapsed .lang-select {
-            display: none;
-        }
-
-        /* ---- ОСНОВНОЙ КОНТЕНТ ---- */
-        .main-content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: radial-gradient(circle at top right, #1e293b, #0f172a);
-            padding: 20px;
-            min-height: 100vh
-        }
-
-        .page {
-            display: none;
-            width: 100%;
-            justify-content: center;
-            align-items: center
-        }
-
-        .page.active {
-            display: flex;
-            animation: fadeIn 0.4s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ---- ГЛАВНАЯ ---- */
-        .content-card {
-            background: rgba(30, 41, 59, .5);
-            border: 1px solid rgba(255, 255, 255, .05);
-            padding: clamp(28px, 5vw, 50px);
-            border-radius: 30px;
-            text-align: center;
-            max-width: 550px;
-            width: 100%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, .5)
-        }
-
-        .profile-img {
-            cursor: pointer;
-            width: min(200px, 50vw);
-            height: min(200px, 50vw);
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #38bdf8;
-            margin-bottom: 20px;
-            box-shadow: 0 0 20px rgba(56, 189, 248, .2);
-            transition: .5s
-        }
-
-        .profile-img:hover {
-            transform: scale(1.05);
-            border: 5px solid #100480;
-            box-shadow: 0 0 25px rgba(46, 26, 223, .6)
-        }
-
-        .badge-dev {
-            display: inline-block;
-            background: #38bdf8;
-            color: #0f172a;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: .8rem;
-            font-weight: bold;
-            margin-bottom: 15px
-        }
-
-        h1 {
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
-            margin-bottom: 5px
-        }
-
-        h2 {
-            color: #94a3b8;
-            font-weight: 400;
-            font-size: clamp(.9rem, 2.5vw, 1.1rem);
-            margin-bottom: 20px
-        }
-
-        .hr-custom {
-            border: 0;
-            height: 1px;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, .1), transparent);
-            margin: 20px 0
-        }
-
-        .actions {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .social-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: white;
-            color: black;
-            text-decoration: none;
-            padding: 7px 18px;
-            border-radius: 18px;
-            font-weight: 600;
-            transition: .4s
-        }
-
-        .social-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 5px 8px 8px -3px rgba(242, 240, 240, .949);
-            background: linear-gradient(45deg, #f09433, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888);
-            color: white
-        }
-
-        .btn-cv {
-            background: rgba(56, 189, 248, .1);
-            color: #38bdf8;
-            border: 1px solid #38bdf8;
-        }
-
-        .btn-cv:hover {
-            background: #38bdf8;
-            color: #0f172a;
-            box-shadow: 0 5px 15px rgba(56, 189, 248, .4);
-            transform: translateY(-3px);
-        }
-
-        /* Навыки */
-        .skills-section {
-            background: rgba(0, 0, 0, .2);
-            border-radius: 16px;
-            padding: 15px;
-            margin-top: 20px;
-            text-align: left;
-            border: 1px solid rgba(255, 255, 255, .03);
-        }
-
-        .skills-title {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #64748b;
-            margin-bottom: 12px;
-            text-align: center;
-        }
-
-        .skills-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            justify-content: center;
-        }
-
-        .skill-badge {
-            background: rgba(255, 255, 255, .05);
-            border: 1px solid rgba(255, 255, 255, .1);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            color: #cbd5e1;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: .3s;
-        }
-
-        .skill-badge:hover {
-            background: rgba(56, 189, 248, .15);
-            border-color: #38bdf8;
-            color: #38bdf8;
-        }
-
-        /* ---- ПРОЕКТЫ ---- */
-        .projects-page {
-            width: 100%;
-            max-width: 900px;
-            padding: 10px 0;
-            align-items: flex-start !important
-        }
-
-        .projects-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 28px;
-            width: 100%
-        }
-
-        .projects-title {
-            font-size: clamp(1.2rem, 3vw, 1.6rem);
-            font-weight: 700;
-            color: #f1f5f9
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
-            gap: 16px;
-            width: 100%
-        }
-
-        .project-card {
-            background: rgba(30, 41, 59, .6);
-            border: 1px solid rgba(255, 255, 255, .07);
-            border-radius: 16px;
-            overflow: hidden;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            transition: transform .3s, box-shadow .3s, border-color .3s;
-            display: flex;
-            flex-direction: column
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, .4);
-            border-color: rgba(56, 189, 248, .3)
-        }
-
-        .project-thumb {
-            height: min(130px, 30vw);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: clamp(2rem, 5vw, 2.8rem);
-            position: relative;
-            overflow: hidden
-        }
-
-        .project-thumb-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background .3s;
-            font-size: clamp(.8rem, 2vw, 1rem);
-            color: white;
-            font-weight: 600;
-            letter-spacing: .05em;
-            opacity: 0;
-            transition: all .3s
-        }
-
-        .project-card:hover .project-thumb-overlay {
-            background: rgba(0, 0, 0, .45);
-            opacity: 1
-        }
-
-        .project-body {
-            padding: 16px;
-            flex: 1
-        }
-
-        .project-name {
-            font-size: clamp(.9rem, 2vw, 1rem);
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: #f1f5f9
-        }
-
-        .project-desc {
-            font-size: clamp(.75rem, 1.8vw, .8rem);
-            color: #64748b;
-            line-height: 1.5
-        }
-
-        .project-footer {
-            padding: 10px 16px;
-            border-top: 1px solid rgba(255, 255, 255, .05);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: .75rem;
-            color: #38bdf8
-        }
-
-        .projects-empty {
-            width: 100%;
-            text-align: center;
-            padding: 60px 20px;
-            color: #475569;
-            grid-column: 1/-1
-        }
-
-        .projects-empty i {
-            font-size: 3rem;
-            margin-bottom: 12px;
-            display: block
-        }
-
-        body:has(.sidebar.mobile-open) .mobile-menu-btn {
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.2s;
-}
-
-/* Разрешаем кнопке-гамбургеру внутри сайдбара быть видимой на мобилках */
-@media(max-width:640px){
-    .sidebar #toggle-btn {
-        display: flex !important; /* Форсируем отображение */
-        position: absolute;
-        top: 14px;
-        right: 14px;
-        color: #0f172a;
-    }
-}
     </style>
 </head>
-
 <body>
+    <nav class="lang-panel">
+        <span class="lang-link active" onclick="setLang('ru')">RU</span>
+        <span class="lang-link" onclick="setLang('en')">EN</span>
+        <span class="lang-link" onclick="setLang('kz')">KZ</span>
+    </nav>
 
-    <button class="mobile-menu-btn" id="mobile-menu-btn"><i class="bi bi-list"></i></button>
-    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <header class="header">
+        <img src="avatar/nadysik.png" alt="Надежда Кузьмина" class="nadysik" loading="lazy">
+        <h1 class="header__title" data-key="title">Зубной Техник</h1>
+        <h2 class="header__subtitle" data-key="name">Надежда Кузьмина</h2>
+    </header>
 
-    <div class="wrapper">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <span class="logo-text">VirusV<span class="dot"></span></span>
-                <button id="toggle-btn"><i class="bi bi-list"></i></button>
-            </div>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li class="active" id="nav-home">
-                        <a href="#" onclick="showPage('home');return false">
-                            <i class="bi bi-house-door"></i>
-                            <span class="nav-text" data-i18n="navHome">Главная</span>
-                        </a>
-                    </li>
-                    <li id="nav-projects">
-                        <a href="#" onclick="showPage('projects');return false">
-                            <i class="bi bi-code-slash"></i>
-                            <span class="nav-text" data-i18n="navProjects">Проекты</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="sidebar-footer">
-                <select id="lang-switch" class="lang-select">
-                    <option value="ru">Русский</option>
-                    <option value="en">English</option>
-                    <option value="kk">Қазақша</option>
-                </select>
-                <div class="footer-copy">
-                    <i class="bi bi-patch-check"></i>
-                    <span data-i18n="footerText"> &copy; 2026 VirusV</span>
+    <main class="main">
+        <section class="section">
+            <h2 class="section__title" data-key="sec_services">Все виды съёмного протезирования</h2>
+            <details class="modern-details">
+                <summary id="summary-services">📋 Открыть Список</summary>
+                <div class="details-content">
+                    <ol class="skills-list" id="skills-list">
+                        </ol>
                 </div>
-            </div>
-        </aside>
+            </details>
+        </section>
 
-        <main class="main-content">
-            <div class="page active" id="page-home">
-                <div class="content-card">
-                    <div class="profile-header">
-                        <img src="myfoto.png" alt="Profile" class="profile-img">
-                    </div>
-                    <h1>VirusV</h1>
-                    <div class="badge-dev" data-i18n="badgeDev">Developer</div>
-                    <hr class="hr-custom">
-                    <h2 data-i18n="subtitle">Начинающий FRONT END разработчик.</h2>
-                    <p data-i18n="welcome" style="margin-bottom: 20px;">Добро пожаловать на мою персональную страницу!
-                    </p>
+        <section class="section">
+            <h2 class="section__title" data-key="sec_works">Мои работы</h2>
+            <details class="modern-details">
+                <summary id="summary-gallery">🖼️ Открыть Галерею</summary>
+                <div class="gallery" id="gallery"></div>
+            </details>
+        </section>
 
-                    <div class="actions">
-                        <a href="https://www.instagram.com/vikhrevviktor" target="_blank" class="social-btn">
-                            <i class="bi bi-instagram"></i> Instagram
-                        </a>
-                        <a href="resume.pdf" target="_blank" class="social-btn btn-cv">
-                            <i class="bi bi-file-earmark-person"></i> <span data-i18n="downloadCV">Скачать CV</span>
-                        </a>
-                    </div>
+        <hr class="hr">
 
-                    <div class="skills-section">
-                        <div class="skills-title" data-i18n="skillsTitle">Мой стек технологий</div>
-                        <div class="skills-list">
-                            <span class="skill-badge"><i class="bi bi-filetype-html"></i> HTML5</span>
-                            <span class="skill-badge"><i class="bi bi-filetype-css"></i> CSS3</span>
-                            <span class="skill-badge"><i class="bi bi-filetype-js"></i> JavaScript</span>
-                            <!-- <span class="skill-badge"><i class="bi bi-file-earmark-code"></i> Python</span> -->
-                            <!-- <span class="skill-badge"><i class="bi bi-rocket"></i> FastAPI</span> -->
-                            <!-- <span class="skill-badge"><i class="bi bi-box"></i> Docker</span> -->
-                            <!-- <span class="skill-badge"><i class="bi bi-hdd-network"></i> Tuna / NGROK</span>  -->
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <article class="article">
+            <h2 data-key="sec_contact">Связаться со мной</h2>
+            <address class="contacts">
+                <a href="https://www.instagram.com/naide.kuz/" target="_blank" rel="noopener noreferrer" class="contact-btn contact-btn--instagram"><i class="bi bi-instagram"></i> Instagram</a>
+                <a href="https://t.me/+FgswcdiI5O81OGUy" target="_blank" rel="noopener noreferrer" class="contact-btn contact-btn--telegram"><i class="bi bi-telegram"></i> Telegram</a>
+                <a href="https://wa.me/77072533555" target="_blank" rel="noopener noreferrer" class="contact-btn" style="background: #25D366;">
+                <i class="bi bi-whatsapp"></i> WhatsApp</a>
+                <a href="tel:+77072533555" class="contact-btn contact-btn--phone" id="btn-call"><i class="bi bi-telephone"></i> Позвонить</a>
+            </address>
+        </article>
+    </main>
 
-            <div class="page" id="page-projects">
-                <div class="projects-page">
-                    <div class="projects-header">
-                        <h2 class="projects-title" data-i18n="projectsTitle">Мои проекты</h2>
-                    </div>
-                    <div class="projects-grid" id="projects-grid"></div>
-                </div>
-            </div>
-        </main>
+    <footer><p class="footer-text" id="footer-text">&copy; 2026 Надежда Кузьмина — Зубной Техник</p></footer>
+
+    <div class="modal" id="modal">
+        <button class="modal-btn modal-btn--close" onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
+        <button class="modal-btn modal-nav prev" onclick="changeImage(-1)"><i class="bi bi-chevron-left"></i></button>
+        <img class="modal-content" id="modalImg" src="" alt="Фото работы">
+        <button class="modal-btn modal-nav next" onclick="changeImage(1)"><i class="bi bi-chevron-right"></i></button>
+        <div class="modal-counter" id="modalCounter"></div>
     </div>
 
     <script>
-        /* =============================================
-           МУЛЬТИЯЗЫЧНОСТЬ (i18n)
-        ============================================= */
         const translations = {
             ru: {
-                navHome: "Главная",
-                navProjects: "Проекты",
-                badgeDev: "Разработчик",
-                subtitle: "Начинающий FRONT END разработчик.",
-                welcome: "Добро пожаловать на мою персональную страницу!",
-                downloadCV: "Скачать CV",
-                skillsTitle: "Мой стек технологий",
-                projectsTitle: "Мои проекты",
-                footerText: "© 2026 VirusV",
-                openProject: "Открыть →",
-                emptyProjects: "Проектов пока нет.<br>Добавь первый прямо в коде!"
+                title: "Зубной Техник",
+                name: "Надежда Кузьмина",
+                sec_services: "Все виды съёмного протезирования",
+                sec_works: "Мои работы",
+                sec_contact: "Связаться со мной",
+                sum_services: "📋 Открыть Список",
+                sum_gallery: "🖼️ Открыть Галерею",
+                call: "Позвонить",
+                footer: "© 2026 Надежда Кузьмина — Зубной Техник",
+                services: ["Германия", "Нейлон", "Акрил", "Кондулор (Швейцария)", "Бюгельный (Кобальт-Хром)", "Бюгельный белый (Acetal)", "На имплантах (Ball Attachment)", "Микропротез до 3-х единиц"]
             },
             en: {
-                navHome: "Home",
-                navProjects: "Projects",
-                badgeDev: "Developer",
-                subtitle: "Junior FRONT END Developer.",
-                welcome: "Welcome to my personal page!",
-                downloadCV: "Download CV",
-                skillsTitle: "Tech Stack",
-                projectsTitle: "My Projects",
-                footerText: "© 2026 VirusV",
-                openProject: "Open →",
-                emptyProjects: "No projects yet.<br>Add the first one in the code!"
+                title: "Dental Technician",
+                name: "Nadezhda Kuzmina",
+                sec_services: "All types of removable prosthetics",
+                sec_works: "My works",
+                sec_contact: "Contact me",
+                sum_services: "📋 View List",
+                sum_gallery: "🖼️ View Gallery",
+                call: "Call",
+                footer: "© 2026 Nadezhda Kuzmina — Dental Technician",
+                services: ["Germany", "Nylon", "Acrylic", "Condulor (Switzerland)", "Clasp (Cobalt-Chrome)", "White Clasp (Acetal)", "Implant-supported (Ball Attachment)", "Micro-prosthesis (up to 3 units)"]
             },
-            kk: {
-                navHome: "Басты бет",
-                navProjects: "Жобалар",
-                badgeDev: "Әзірлеуші",
-                subtitle: "Жаңадан бастаушы FRONT END әзірлеуші.",
-                welcome: "Менің жеке парақшама қош келдіңіз!",
-                downloadCV: "Түйіндемені жүктеу",
-                skillsTitle: "Менің технологияларым",
-                projectsTitle: "Менің жобаларым",
-                footerText: "© 2026 VirusV",
-                openProject: "Ашу →",
-                emptyProjects: "Әзірге жобалар жоқ.<br>Біріншісін кодта қосыңыз!"
+            kz: {
+                title: "Тіс технигі",
+                name: "Надежда Кузьмина",
+                sec_services: "Алмалы-салмалы протездеудің барлық түрі",
+                sec_works: "Менің жұмыстарым",
+                sec_contact: "Байланысу",
+                sum_services: "📋 Тізімді ашу",
+                sum_gallery: "🖼️ Галереяны ашу",
+                call: "Қоңырау шалу",
+                footer: "© 2026 Надежда Кузьмина — Тіс технигі",
+                services: ["Германия", "Нейлон", "Акрил", "Кондулор (Швейцария)", "Бюгельді (Кобальт-Хром)", "Ақ бюгельді (Acetal)", "Импланттағы (Ball Attachment)", "3 бірлікке дейінгі микропротез"]
             }
         };
 
-        let currentLang = localStorage.getItem('selectedLang') || 'ru';
-        const langSwitch = document.getElementById('lang-switch');
+        function setLang(lang) {
+            // Обновляем кнопки переключения
+            document.querySelectorAll('.lang-link').forEach(link => {
+                link.classList.toggle('active', link.innerText.toLowerCase() === lang);
+            });
 
-        function setLanguage(lang) {
-        currentLang = lang;
-        localStorage.setItem('selectedLang', lang);
-        langSwitch.value = lang;
+            const t = translations[lang];
+            
+            // Текстовые блоки
+            document.querySelector('[data-key="title"]').innerText = t.title;
+            document.querySelector('[data-key="name"]').innerText = t.name;
+            document.querySelector('[data-key="sec_services"]').innerText = t.sec_services;
+            document.querySelector('[data-key="sec_works"]').innerText = t.sec_works;
+            document.querySelector('[data-key="sec_contact"]').innerText = t.sec_contact;
+            document.getElementById('summary-services').innerText = t.sum_services;
+            document.getElementById('summary-gallery').innerText = t.sum_gallery;
+            document.getElementById('footer-text').innerText = t.footer;
+            document.getElementById('btn-call').innerHTML = `<i class="bi bi-telephone"></i> ${t.call}`;
 
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (translations[lang][key]) {
-                if (translations[lang][key].includes('<')) {
-                    el.innerHTML = translations[lang][key];
-                } else {
-                    el.textContent = translations[lang][key];
-                }
-            }
-        });
-        
-        // Перерисовываем проекты, чтобы обновить их тексты
-        renderProjects();
-    }
-
-    langSwitch.addEventListener('change', (e) => setLanguage(e.target.value));
-
-        /* =============================================
-           ПРОЕКТЫ С ПОДДЕРЖКОЙ ПЕРЕВОДА
-        ============================================= */
-        const projects = [
-            {
-                name: { ru: 'Мой профиль', en: 'My Profile', kk: 'Менің профилім' },
-                desc: { ru: 'Личная визитка разработчика', en: 'Personal developer portfolio card', kk: 'Әзірлеушінің жеке визиткасы' },
-                url: 'https://vvtrest-collab.github.io/my_developer_visit/',
-                icon: '💻', color: 'linear-gradient(135deg,#0f2744,#0f172a)'
-            },
-            {
-                name: { ru: 'Зубной техник', en: 'Dental Technician', kk: 'Тіс технигі' },
-                desc: { ru: 'Персональная визитка зубного техника', en: 'Personal business card for a dental technician', kk: 'Тіс технигінің жеке визиткасы' },
-                url: 'https://vvtrest-collab.github.io/electronik_vizit/',
-                icon: '🦷', color: 'linear-gradient(135deg,#1e3a5f,#0f172a)'
-            },
-            {
-                name: { ru: 'Зубной техник (Dark)', en: 'Dental Technician Dark', kk: 'Тіс технигі (Қараңғы)' },
-                desc: { ru: 'Персональная визитка (тёмная тема)', en: 'Personal business card (Dark theme)', kk: 'Жеке визитка (Қараңғы тақырып)' },
-                url: 'https://vvtrest-collab.github.io/electronik_vizit_dark/',
-                icon: '🦷', color: 'linear-gradient(135deg,#1e3a5f,#0f172a)'
-            },
-            {
-                name: { ru: 'Barbershop Bot', en: 'Barbershop Bot', kk: 'Barbershop Bot' },
-                desc: { ru: 'Telegram-бот для записи клиентов в барбершоп', en: 'Telegram bot for booking clients in a barbershop', kk: 'Барбершопқа жазылуға арналған Telegram-бот' },
-                url: '#', // Замени на свою ссылку GitHub/Telegram
-                icon: '✂️', color: 'linear-gradient(135deg,#b91d73,#f953c6)'
-            },
-        ];
-
-        const grid = document.getElementById('projects-grid');
-
-        function renderProjects() {
-            grid.innerHTML = '';
-            if (!projects.length) {
-                grid.innerHTML = `<div class="projects-empty"><i class="bi bi-folder-x"></i><p>${translations[currentLang].emptyProjects}</p></div>`;
-                return;
-            }
-            projects.forEach(p => {
-                let hostname = '';
-                try { hostname = new URL(p.url).hostname; } catch (e) { hostname = p.url; }
-                if (hostname === window.location.hostname || hostname === '') hostname = 'GitHub / Local';
-
-                const card = document.createElement('a');
-                card.className = 'project-card'; card.href = p.url; card.target = '_blank'; card.rel = 'noopener noreferrer';
-
-                // Достаем текст под текущий язык
-                const pName = p.name[currentLang] || p.name.ru;
-                const pDesc = p.desc[currentLang] || p.desc.ru;
-                const openText = translations[currentLang].openProject;
-
-                card.innerHTML = `
-                <div class="project-thumb" style="background:${p.color}">
-                    <span>${p.icon}</span>
-                    <div class="project-thumb-overlay">${openText}</div>
-                </div>
-                <div class="project-body">
-                    <div class="project-name">${pName}</div>
-                    <div class="project-desc">${pDesc}</div>
-                </div>
-                <div class="project-footer"><i class="bi bi-box-arrow-up-right"></i><span>${hostname}</span></div>`;
-                grid.appendChild(card);
+            // Список услуг
+            const sList = document.getElementById('skills-list');
+            sList.innerHTML = '';
+            t.services.forEach(item => {
+                const li = document.createElement('li');
+                li.innerText = `🦷 ${item}`;
+                sList.appendChild(li);
             });
         }
 
-        /* Инициализация языка и рендер */
-        setLanguage(currentLang);
+        // Инициализация при загрузке
+        setLang('ru');
 
-        /* Навигация */
-        function showPage(name) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.sidebar-nav li').forEach(l => l.classList.remove('active'));
-            document.getElementById('page-' + name).classList.add('active');
-            document.getElementById('nav-' + name).classList.add('active');
-            closeMobileSidebar();
-        }
+        const IMAGES = Array.from({length:8},(_,i)=>`products/${i+1}.jpg`);
+        let idx = 0;
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modalImg');
+        const counter = document.getElementById('modalCounter');
+        const gallery = document.getElementById('gallery');
 
-        /* Десктоп toggle */
-        document.getElementById('toggle-btn').addEventListener('click', () => {
-    if (window.innerWidth <= 640) {
-        closeMobileSidebar(); // На мобилке кнопка внутри будет закрывать
-    } else {
-        sidebar.classList.toggle('collapsed'); // На ПК сворачивать
-    }
-});
-
-        /* Мобильный toggle */
-        const mBtn = document.getElementById('mobile-menu-btn');
-        const overlay = document.getElementById('sidebar-overlay');
-        const sb = document.getElementById('sidebar');
-
-        mBtn.addEventListener('click', () => {
-            sb.classList.toggle('mobile-open');
-            overlay.classList.toggle('show');
+        IMAGES.forEach((src,i)=>{
+            const img = document.createElement('img');
+            img.className='gallery__item'; img.src=src; img.alt=`Работа ${i+1}`; img.loading='lazy';
+            img.onerror=()=>img.src=`https://via.placeholder.com/400x400?text=${i+1}`;
+            img.addEventListener('click',()=>openModal(i));
+            gallery.appendChild(img);
         });
-        overlay.addEventListener('click', closeMobileSidebar);
 
-        function closeMobileSidebar() {
-            sb.classList.remove('mobile-open');
-            overlay.classList.remove('show');
-        }
+        function openModal(i){ idx=i; updateModal(); modal.classList.add('show'); document.body.style.overflow='hidden'; }
+        function closeModal(){ modal.classList.remove('show'); document.body.style.overflow=''; }
+        function changeImage(d){ idx=(idx+d+IMAGES.length)%IMAGES.length; updateModal(); }
+        function updateModal(){ modalImg.src=IMAGES[idx]; modalImg.onerror=()=>{ modalImg.src=`https://via.placeholder.com/800x800?text=Работа+${idx+1}`; }; counter.textContent=`${idx+1} / ${IMAGES.length}`; }
+
+        modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
+        document.addEventListener('keydown',e=>{ if(!modal.classList.contains('show')) return; if(e.key==='Escape') closeModal(); if(e.key==='ArrowLeft') changeImage(-1); if(e.key==='ArrowRight') changeImage(1); });
+        let tx=0;
+        modal.addEventListener('touchstart',e=>{tx=e.changedTouches[0].screenX},{passive:true});
+        modal.addEventListener('touchend',e=>{ const d=tx-e.changedTouches[0].screenX; if(Math.abs(d)>50) changeImage(d>0?1:-1); },{passive:true});
     </script>
 </body>
-
 </html>
