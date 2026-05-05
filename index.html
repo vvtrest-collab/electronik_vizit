@@ -133,14 +133,6 @@
             </details>
         </section>
 
-        <section class="section">
-            <h2 class="section__title" data-key="sec_works">Мои работы</h2>
-            <details class="modern-details">
-                <summary id="summary-gallery">🖼️ Открыть Галерею</summary>
-                <div class="gallery" id="gallery"></div>
-            </details>
-        </section>
-
         <hr class="hr">
 
         <article class="article">
@@ -171,10 +163,8 @@
                 title: "Зубной Техник",
                 name: "Надежда Кузьмина",
                 sec_services: "Все виды съёмного протезирования",
-                sec_works: "Мои работы",
                 sec_contact: "Связаться со мной",
                 sum_services: "📋 Открыть Список",
-                sum_gallery: "🖼️ Открыть Галерею",
                 call: "Позвонить",
                 footer: "© 2026 Надежда Кузьмина — Зубной Техник",
                 services: ["Германия", "Нейлон", "Акрил", "Кондулор (Швейцария)", "Бюгельный (Кобальт-Хром)", "Бюгельный белый (Acetal)", "На имплантах (Ball Attachment)", "Микропротез до 3-х единиц"]
@@ -183,10 +173,8 @@
                 title: "Dental Technician",
                 name: "Nadezhda Kuzmina",
                 sec_services: "All types of removable prosthetics",
-                sec_works: "My works",
                 sec_contact: "Contact me",
                 sum_services: "📋 View List",
-                sum_gallery: "🖼️ View Gallery",
                 call: "Call",
                 footer: "© 2026 Nadezhda Kuzmina — Dental Technician",
                 services: ["Germany", "Nylon", "Acrylic", "Condulor (Switzerland)", "Clasp (Cobalt-Chrome)", "White Clasp (Acetal)", "Implant-supported (Ball Attachment)", "Micro-prosthesis (up to 3 units)"]
@@ -195,10 +183,8 @@
                 title: "Тіс технигі",
                 name: "Надежда Кузьмина",
                 sec_services: "Алмалы-салмалы протездеудің барлық түрі",
-                sec_works: "Менің жұмыстарым",
                 sec_contact: "Байланысу",
                 sum_services: "📋 Тізімді ашу",
-                sum_gallery: "🖼️ Галереяны ашу",
                 call: "Қоңырау шалу",
                 footer: "© 2026 Надежда Кузьмина — Тіс технигі",
                 services: ["Германия", "Нейлон", "Акрил", "Кондулор (Швейцария)", "Бюгельді (Кобальт-Хром)", "Ақ бюгельді (Acetal)", "Импланттағы (Ball Attachment)", "3 бірлікке дейінгі микропротез"]
@@ -217,19 +203,20 @@
             document.querySelector('[data-key="title"]').innerText = t.title;
             document.querySelector('[data-key="name"]').innerText = t.name;
             document.querySelector('[data-key="sec_services"]').innerText = t.sec_services;
-            document.querySelector('[data-key="sec_works"]').innerText = t.sec_works;
             document.querySelector('[data-key="sec_contact"]').innerText = t.sec_contact;
             document.getElementById('summary-services').innerText = t.sum_services;
-            document.getElementById('summary-gallery').innerText = t.sum_gallery;
             document.getElementById('footer-text').innerText = t.footer;
             document.getElementById('btn-call').innerHTML = `<i class="bi bi-telephone"></i> ${t.call}`;
 
-            // Список услуг
+            // Список услуг — каждый пункт открывает свою картинку
             const sList = document.getElementById('skills-list');
             sList.innerHTML = '';
-            t.services.forEach(item => {
+            t.services.forEach((item, i) => {
                 const li = document.createElement('li');
-                li.innerText = `🦷 ${item}`;
+                li.innerHTML = `🦷 ${item} <span style="font-size:11px;color:var(--color-plum);margin-left:6px;opacity:.7"></span>`;
+                li.style.cursor = 'pointer';
+                li.title = 'Нажмите, чтобы посмотреть фото';
+                li.addEventListener('click', () => openModal(i));
                 sList.appendChild(li);
             });
         }
@@ -242,15 +229,6 @@
         const modal = document.getElementById('modal');
         const modalImg = document.getElementById('modalImg');
         const counter = document.getElementById('modalCounter');
-        const gallery = document.getElementById('gallery');
-
-        IMAGES.forEach((src,i)=>{
-            const img = document.createElement('img');
-            img.className='gallery__item'; img.src=src; img.alt=`Работа ${i+1}`; img.loading='lazy';
-            img.onerror=()=>img.src=`https://via.placeholder.com/400x400?text=${i+1}`;
-            img.addEventListener('click',()=>openModal(i));
-            gallery.appendChild(img);
-        });
 
         function openModal(i){ idx=i; updateModal(); modal.classList.add('show'); document.body.style.overflow='hidden'; }
         function closeModal(){ modal.classList.remove('show'); document.body.style.overflow=''; }
